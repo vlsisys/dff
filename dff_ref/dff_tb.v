@@ -10,9 +10,6 @@
 // --------------------------------------------------
 `define	CLKFREQ		100		// Clock Freq. (Unit: MHz)
 `define	SIMCYCLE	`NVEC	// Sim. Cycles
-`define BW_DATA		32		// Bitwidth of ~~
-`define BW_ADDR		5		// Bitwidth of ~~
-`define BW_CTRL		4		// Bitwidth of ~~
 `define NVEC		100		// # of Test Vector
 
 // --------------------------------------------------
@@ -39,7 +36,7 @@ module dff_tb;
 // --------------------------------------------------
 //	Clock
 // --------------------------------------------------
-	always #(500/`CLKFREQ)	i_clk = ~i_clk;
+	always #(1000*500/`CLKFREQ)	i_clk = ~i_clk;
 
 // --------------------------------------------------
 //	Test Stimulus
@@ -47,14 +44,14 @@ module dff_tb;
 	integer		i, j;
 	initial begin
 		i_d		= 0;
-		i_clk	= 0;
+		i_clk	= 1;
 		for (i=0; i<`SIMCYCLE; i++) begin
 			j = $urandom_range(0, 10);
-			#((0+(j*0.1))*1000/`CLKFREQ);
+			#((0+(j*0.1))*1000000/`CLKFREQ);
 			i_d = $urandom;
-			#((1-(j*0.1))*1000/`CLKFREQ);
+			#((1-(j*0.1))*1000000/`CLKFREQ);
 		end
-		#(1000/`CLKFREQ);
+		#(1000000/`CLKFREQ);
 		$finish;
 	end
 
