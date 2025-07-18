@@ -14,26 +14,14 @@ module c_dut_tile
 	parameter	T_SU1	= 42,
 	parameter	T_SU2	= 44,
 	parameter	T_SU3	= 46,
-	parameter	T_SU4	= 48,
-	parameter	T_SU5	= 50,
-	parameter	T_SU6	= 52,
-	parameter	T_SU7	= 54,
 	parameter	T_HD0	= 20,
 	parameter	T_HD1	= 22,
 	parameter	T_HD2	= 24,
 	parameter	T_HD3	= 26,
-	parameter	T_HD4	= 28,
-	parameter	T_HD5	= 30,
-	parameter	T_HD6	= 32,
-	parameter	T_HD7	= 34,
 	parameter	T_CQ0	= 100,
 	parameter	T_CQ1	= 120,
 	parameter	T_CQ2	= 140,
-	parameter	T_CQ3	= 160,
-	parameter	T_CQ4	= 180,
-	parameter	T_CQ5	= 200,
-	parameter	T_CQ6	= 220,
-	parameter	T_CQ7	= 240
+	parameter	T_CQ3	= 160
 )
 (	
 	output reg			o_mux,
@@ -61,13 +49,13 @@ module c_dut_tile
 	//	T_HD	: Hold  Time
 	//	T_CQ	: CLK-to-Q 
 	dff #(.T_SU(T_SU0), .T_HD(T_HD0), .T_CQ(T_CQ0)) dut0(.o_q(dut_q[0]), .i_d(gated_d[0]), .i_clk(gated_clk[0]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut1(.o_q(dut_q[1]), .i_d(gated_d[0]), .i_clk(gated_clk[0]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut2(.o_q(dut_q[2]), .i_d(gated_d[1]), .i_clk(gated_clk[1]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut3(.o_q(dut_q[3]), .i_d(gated_d[1]), .i_clk(gated_clk[1]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU4), .T_HD(T_HD4), .T_CQ(T_CQ4)) dut4(.o_q(dut_q[4]), .i_d(gated_d[2]), .i_clk(gated_clk[2]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU5), .T_HD(T_HD5), .T_CQ(T_CQ5)) dut5(.o_q(dut_q[5]), .i_d(gated_d[2]), .i_clk(gated_clk[2]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU6), .T_HD(T_HD6), .T_CQ(T_CQ6)) dut6(.o_q(dut_q[6]), .i_d(gated_d[3]), .i_clk(gated_clk[3]), .i_rstn(1'b1));
-	dff #(.T_SU(T_SU7), .T_HD(T_HD7), .T_CQ(T_CQ7)) dut7(.o_q(dut_q[7]), .i_d(gated_d[3]), .i_clk(gated_clk[3]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU0), .T_HD(T_HD0), .T_CQ(T_CQ0)) dut1(.o_q(dut_q[1]), .i_d(gated_d[0]), .i_clk(gated_clk[0]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut2(.o_q(dut_q[2]), .i_d(gated_d[1]), .i_clk(gated_clk[1]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut3(.o_q(dut_q[3]), .i_d(gated_d[1]), .i_clk(gated_clk[1]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut4(.o_q(dut_q[4]), .i_d(gated_d[2]), .i_clk(gated_clk[2]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut5(.o_q(dut_q[5]), .i_d(gated_d[2]), .i_clk(gated_clk[2]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut6(.o_q(dut_q[6]), .i_d(gated_d[3]), .i_clk(gated_clk[3]), .i_rstn(1'b1));
+	dff #(.T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut7(.o_q(dut_q[7]), .i_d(gated_d[3]), .i_clk(gated_clk[3]), .i_rstn(1'b1));
 
 	wire		dly_d	[0:3];
 	wire		dly_clk	[0:3];
