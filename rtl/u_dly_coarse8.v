@@ -5,8 +5,6 @@
 //	* Description	: 
 // ==================================================
 
-`define		T_DLY_COARSE	60
-
 module u_dly_coarse8
 (	
 	output reg			o_out,

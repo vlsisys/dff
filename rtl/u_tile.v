@@ -4,10 +4,6 @@
 //	* Filename		: u_tile.v
 //	* Description	: 
 // ==================================================
-`define			T_DLY_MUX2		50
-`define			T_DLY_XOR		40
-`define			T_DLY_NAND2		40
-`define			T_DLY_BUF		60
 
 module u_tile
 #(	
@@ -19,9 +15,9 @@ module u_tile
 	parameter	T_HD1	= 21,
 	parameter	T_HD2	= 22,
 	parameter	T_HD3	= 23,
-	parameter	T_CQ0	= 100
-	parameter	T_CQ1	= 104
-	parameter	T_CQ2	= 108
+	parameter	T_CQ0	= 100,
+	parameter	T_CQ1	= 104,
+	parameter	T_CQ2	= 108,
 	parameter	T_CQ3	= 112
 )
 (	
@@ -42,13 +38,13 @@ module u_tile
 	assign	#(`T_DLY_NAND2)		clk			= ~(i_clk & i_tile_sel);
 	assign	#(`T_DLY_BUF)		sigs_sel	= i_sigs_sel;
 
-	wire				dutout[0:3]
+	wire				dutout[0:3];
 	u_dut #( .T_SU(T_SU0), .T_HD(T_HD0), .T_CQ(T_CQ0)) dut0(.o_mux(dutout[0]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
 	u_dut #( .T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut1(.o_mux(dutout[1]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
 	u_dut #( .T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut2(.o_mux(dutout[2]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
 	u_dut #( .T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut3(.o_mux(dutout[3]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
 
-	wire				dut_muxout;
+	reg					dut_muxout;
 	wire				xor_out;
 	always @(*) begin
 		case(i_duts_sel)

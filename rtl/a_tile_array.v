@@ -4,12 +4,10 @@
 //	* Filename		: a_tile_array.v
 //	* Description	: 
 // ==================================================
-`define			T_DLY_BUF	60
-`define			T_DLY_DEC2	60
 
 module a_tile_array
 (	
-	output reg			o_tile,
+	output				o_tile,
 	input				i_d,
 	input				i_clk,
 	input	[3:0]		i_addr,
@@ -49,7 +47,7 @@ module a_tile_array
 	)
 	u_tile0(
 		.o_tile		(tile_io[0]		),
-		.i_tile		(0				),
+		.i_tile		(1'b0			),
 		.i_d		(d				),
 		.i_clk		(clk			),
 		.i_edge_sel	(edge_sel		),

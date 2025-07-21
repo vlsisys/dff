@@ -5,9 +5,6 @@
 //	* Description	: 
 // ==================================================
 
-`define			T_DLY_MUX4		50
-`define			T_DLY_INV		30
-
 module u_dut
 #(	
 	parameter	T_SU	= 40,

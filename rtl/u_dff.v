@@ -26,7 +26,7 @@ module	dff
 	assign	#(T_HD)		delayed_clk	= i_clk;
 
 	wire	   			clk2q;
-	assign	#(T_CK2Q)	clk2q		= i_clk;
+	assign	#(T_CQ)		clk2q		= i_clk;
 
 	reg					q_ideal;
 	reg					q_su_tested;

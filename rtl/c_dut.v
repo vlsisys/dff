@@ -5,9 +5,6 @@
 //	* Description	: 
 // ==================================================
 
-`define			T_DLY_AND2		50
-`define			T_DLY_MUX4		50
-
 module c_dut_tile
 #(	
 	parameter	T_SU0	= 40,

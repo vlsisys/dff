@@ -5,9 +5,6 @@
 //	* Description	: 
 // ==================================================
 
-`define			T_DLY_FINE_BASE		200
-`define			T_DLY_FINE			2
-
 module u_dly_fine
 (	
 	output 						o_out,

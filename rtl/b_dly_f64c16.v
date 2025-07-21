@@ -9,16 +9,16 @@ module b_dly_f64c16
 (	
 	output				o_out,
 	input				i_in,
-	input		[9:0]	i_dly_sel
+	input		[9:0]	i_dly
 );
 
 	wire			w_dly_fine;
 	wire	[63:0]	w_sel_fine;
 
 	u_thermometer64
-	thermometer64(	
+	u_thermometer64(	
 		.o_out	(w_sel_fine		),
-		.i_in	(i_dly_sel[5:0]	)
+		.i_in	(i_dly[5:0]		)
 	);
 
 
@@ -33,7 +33,7 @@ module b_dly_f64c16
 	u_dly_coarse16(
 		.o_out	(o_out			),
 		.i_in	(w_dly_fine		),
-		.i_sel	(i_dly_sel[9:6] )
+		.i_sel	(i_dly[9:6] 	)
 	);
 
 endmodule
