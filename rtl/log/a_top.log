@@ -1,22 +1,16 @@
 VCD info: dumpfile ./vcd/a_top.vcd opened for output.
-[             4579925] Setup Time Violation!
-[             4779841] Hold  Time Violation!
-[             4979889] Hold  Time Violation!
-[             5179901] Setup Time Violation!
-[             5379901] Hold  Time Violation!
-[             5579901] Hold  Time Violation!
-[             8678901] Hold  Time Violation!
-[             8678901] Hold  Time Violation!
-[            11579925] Setup Time Violation!
-[            11779841] Hold  Time Violation!
-[            11979889] Hold  Time Violation!
-[            12179901] Setup Time Violation!
-[            12379901] Hold  Time Violation!
-[            12579901] Hold  Time Violation!
-[            38179925] Setup Time Violation!
-[            38379841] Hold  Time Violation!
-[            38579889] Hold  Time Violation!
-[            38779901] Setup Time Violation!
-[            38979901] Hold  Time Violation!
-[            39179901] Hold  Time Violation!
-a_top_tb.v:106: $finish called at 40800000 (1ps)
+[             1381557] Setup Time Violation!
+[             1981533] Setup Time Violation!
+[             2781557] Setup Time Violation!
+[             2981569] Setup Time Violation!
+[             3580117] Setup Time Violation!
+[             4380093] Setup Time Violation!
+[             5180117] Setup Time Violation!
+[             5380129] Setup Time Violation!
+[            11182381] Setup Time Violation!
+[            11182381] Setup Time Violation!
+[            12980117] Setup Time Violation!
+[            13780093] Setup Time Violation!
+[            14580117] Setup Time Violation!
+[            14780129] Setup Time Violation!
+a_top_tb.v:108: $finish called at 51000000 (1ps)

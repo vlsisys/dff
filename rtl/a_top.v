@@ -22,7 +22,7 @@ module a_top
 	wire				edge_d;
 	wire				edge_c;
 	wire				edge_m;
-	wire	[1:0]		sigs_sel;
+	wire		[1:0]	sigs_sel;
 	wire				cff_out;
 	wire				d;
 	wire				clk;
@@ -88,8 +88,8 @@ module a_top
 	dff
 	#(
 		.T_SU			(40				),
-		.T_HD			(12				),
-		.T_CQ			(240			)
+		.T_HD			(0				),
+		.T_CQ			(200			)
 	)
 	cff(
 		.o_q			(o_cff			),

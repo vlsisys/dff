@@ -102,7 +102,9 @@ module a_top_tb;
 		init();
 		resetNCycle(4);
 		i_start	= 1;
-		#(200*1000000/`CLKFREQ);
+		#(1000000/`CLKFREQ);
+		i_start	= 0;
+		#(250*1000000/`CLKFREQ);
 		$finish;
 	end
 

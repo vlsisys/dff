@@ -21,8 +21,8 @@ module u_dut
 	wire		d;
 	wire		clk;
 
-	assign	#(`T_DLY_INV)	d	= i_d;
-	assign	#(`T_DLY_INV)	clk	= i_clk;
+	assign	#(`T_DLY_INV)	d	= ~i_d;
+	assign	#(`T_DLY_INV)	clk	= ~i_clk;
 
 	wire		q	[0:1] ;
 

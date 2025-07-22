@@ -21,14 +21,16 @@ module a_fsm
 	input				i_rstn
 );
 
-	
 // --------------------------------------------------
 // Mode
 	localparam	REF_DLY_BIT	= 10;
 	localparam	DAT_DLY_BIT	= 9;
+	localparam	REF_DLY_MAX	= 2**REF_DLY_BIT-1;
+	localparam	DAT_DLY_MAX	= 2**DAT_DLY_BIT-1;
+	localparam	REF_CYCLES	= REF_DLY_BIT+1;
+	localparam	DAT_CYCLES	= DAT_DLY_BIT+1;
 
 	localparam	NUM_SAMPLE	= 4;
-	localparam	NUM_DUT		= 40;
 
 	localparam	M_SU_R		= 2'd0;
 	localparam	M_SU_F		= 2'd1;
@@ -61,7 +63,7 @@ module a_fsm
 		end
 	end
 
-	reg		[3:0]	cnt_state;
+	reg		[4:0]	cnt_state;
 	always @(posedge i_clk or negedge i_rstn) begin
 		if(!i_rstn) begin
 			cnt_state	<= 0;
@@ -103,41 +105,60 @@ module a_fsm
 
 	always @(*) begin
 		case(c_state)
-			S_IDLE      : n_state = !i_start                       ? c_state : S_FIX_TCLK ;
-			S_FIX_TCLK	: n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_MIN_TQ_D ;
-			S_MIN_TQ_D	: n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_MIN_TQ_Q ;
-			S_MIN_TQ_Q	: n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_MIN_TD_D0;
-			S_MIN_TD_D0 : n_state = (cnt_state != DAT_DLY_BIT + 1) ? c_state : S_MIN_TD_D1;
-			S_MIN_TD_D1 : n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_MIN_TD_Q ;
-			S_MIN_TD_Q  : n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_SAMPLE_D ;
-			S_SAMPLE_D  : n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state : S_SAMPLE_Q ;
-			S_SAMPLE_Q  : n_state = (cnt_state != REF_DLY_BIT + 1) ? c_state :
-				                    (cnt_smpls == NUM_SAMPLE  - 1) ? S_DONE  : S_SAMPLE_D ;
-			S_DONE		: n_state = (cnt_addr  == NUM_DUT     - 1) ? S_IDLE  : S_FIX_TCLK ;
+			S_IDLE      : n_state = !i_start                      ? c_state : S_FIX_TCLK ;
+			S_FIX_TCLK	: n_state = (cnt_state != REF_CYCLES)     ? c_state : S_MIN_TQ_D ;
+			S_MIN_TQ_D	: n_state = (cnt_state != REF_CYCLES)     ? c_state : S_MIN_TQ_Q ;
+			S_MIN_TQ_Q	: n_state = (cnt_state != 2*REF_CYCLES+1) ? c_state : S_MIN_TD_D0;
+			S_MIN_TD_D0 : n_state = (cnt_state != DAT_CYCLES)     ? c_state : S_MIN_TD_D1;
+			S_MIN_TD_D1 : n_state = (cnt_state != REF_CYCLES)     ? c_state : S_MIN_TD_Q ;
+			S_MIN_TD_Q  : n_state = (cnt_state != 2*REF_CYCLES+1) ? c_state : S_SAMPLE_D ;
+			S_SAMPLE_D  : n_state = (cnt_state != REF_CYCLES)     ? c_state : S_SAMPLE_Q ;
+			S_SAMPLE_Q  : n_state = (cnt_state != 2*REF_CYCLES+1) ? c_state :
+				                    (cnt_smpls == NUM_SAMPLE - 1) ? S_DONE  : S_SAMPLE_D ;
+			S_DONE		: n_state = S_IDLE;
 		endcase
 	end
 
 	// Output Logic
 	always @(posedge i_clk or negedge i_rstn) begin
 		if (!i_rstn) begin
-			o_dly_ref	<= 2**REF_DLY_BIT-1;
+			o_dly_ref	<= REF_DLY_MAX;
 		end else begin
-			if (c_state != S_IDLE || c_state != S_MIN_TD_D0 || c_state != S_DONE) begin
-				if (cnt_state == REF_DLY_BIT + 1) begin
-					o_dly_ref	<= 2**REF_DLY_BIT-1;
-				end else begin
-					if (p_state != c_state) begin
-						o_dly_ref	<= 2**REF_DLY_BIT-1;
-					end else if (REF_DLY_BIT - 1 - cnt_state >= 0) begin
+			case (c_state)
+				S_IDLE		,
+				S_MIN_TD_D0	,
+				S_DONE		: o_dly_ref	<= REF_DLY_MAX;
+				S_FIX_TCLK	, 
+				S_MIN_TQ_D	, 
+				S_MIN_TD_D0 , 
+				S_MIN_TD_D1 , 
+				S_SAMPLE_D  : begin
+					if (cnt_state == REF_CYCLES) begin
+						o_dly_ref	<= REF_DLY_MAX;
+					end else if (cnt_state <= REF_CYCLES - 2) begin
 						o_dly_ref	<= i_cff_out ? o_dly_ref - 2**(REF_DLY_BIT - 1 - cnt_state) :
-							                       o_dly_ref + 2**(REF_DLY_BIT - 1 - cnt_state) ;
+												   o_dly_ref + 2**(REF_DLY_BIT - 1 - cnt_state) ;
 					end else begin
 						o_dly_ref	<= i_cff_out ? o_dly_ref - 1 : o_dly_ref + 1;
 					end
 				end
-			end else begin
-				o_dly_ref	<= 2**REF_DLY_BIT-1;
-			end
+				default		: begin
+					if (cnt_state == 2*REF_CYCLES + 1) begin
+						o_dly_ref	<= REF_DLY_MAX;
+					end else begin
+						if (cnt_state[0]) begin
+							if (cnt_state <= 2*(REF_CYCLES - 2)) begin
+								o_dly_ref	<= i_cff_out ? o_dly_ref - 2**(REF_DLY_BIT - 1 - cnt_state[4:1]) :
+														   o_dly_ref + 2**(REF_DLY_BIT - 1 - cnt_state[4:1]) ;
+							end else begin
+								o_dly_ref	<= i_cff_out ? o_dly_ref - 1 : o_dly_ref + 1;
+							end
+						end else begin
+							o_dly_ref	<= o_dly_ref;
+						end
+					end
+				end
+			endcase
 		end
 	end
 
@@ -149,7 +170,7 @@ module a_fsm
 			if (c_state == S_MIN_TD_D0) begin
 				dly_dat	<= o_dly_dat;
 			end else begin
-				dly_dat	<= 0;
+				dly_dat	<= dly_dat;
 			end
 		end
 	end
@@ -159,16 +180,14 @@ module a_fsm
 			o_dly_dat	<= 0;
 		end else begin
 			case (c_state)
-				S_MIN_TQ_D	,
+				S_MIN_TQ_D	: o_dly_dat	<= i_mode[1] & DAT_DLY_MAX;
 				S_MIN_TQ_Q	: begin
-					case (i_mode[1])
-						0: o_dly_dat <= 0;
-						1: o_dly_dat <= 2**DAT_DLY_BIT - 1;
-					endcase
+					o_dly_dat	<= cnt_state[0] ? ~i_mode[1] & DAT_DLY_MAX:
+					                                       i_mode[1] & DAT_DLY_MAX;
 				end
 				S_MIN_TD_D0	: begin
 					if (p_state == S_MIN_TQ_Q) begin
-						o_dly_dat	<= i_mode[1] ? 2**DAT_DLY_BIT - 1 : 0;
+						o_dly_dat	<= i_mode[1] ? DAT_DLY_MAX : 0;
 					end else begin
 						if (DAT_DLY_BIT - 1 - cnt_state >= 0) begin
 							o_dly_dat	<= i_cff_out ? o_dly_dat + -1**(i_mode[1])*2**(DAT_DLY_BIT - 1 - cnt_state) :
@@ -194,7 +213,7 @@ module a_fsm
 			S_FIX_TCLK	: o_sigs_sel = 1;
 			S_MIN_TQ_D	: o_sigs_sel = 0;
 			S_MIN_TQ_Q	: o_sigs_sel = i_addr[0] ? 3:2;
-			S_MIN_TD_D0 : o_sigs_sel = 0;
+			S_MIN_TD_D0 : o_sigs_sel = i_addr[0] ? 3:2;
 			S_MIN_TD_D1 : o_sigs_sel = 0;
 			S_MIN_TD_Q  : o_sigs_sel = i_addr[0] ? 3:2;
 			S_SAMPLE_D  : o_sigs_sel = 0;
@@ -206,7 +225,5 @@ module a_fsm
 	assign		o_edge_d	= i_mode[1] ^ i_mode[0];
 	assign		o_edge_c	= 0;
 	assign		o_edge_m	= (o_sigs_sel == 1) ? 0 : i_mode[1] ^ i_mode[0];
-
-
 
 endmodule
