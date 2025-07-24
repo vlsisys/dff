@@ -9,20 +9,20 @@ module a_top
 (	
 	output 				o_osc,
 	output 				o_cff,
-	input		[1:0]	i_mode,
-	input		[4:0]	i_addr,
+	input		[ 1:0]	i_mode,
+	input		[ 4:0]	i_addr,
 	input				i_osc_en,
 	input				i_start,
 	input				i_clk,
 	input				i_rstn
 );
 
-	wire		[9:0]	dly_ref;
-	wire		[8:0]	dly_dat;
+	wire		[10:0]	dly_ref;
+	wire		[ 8:0]	dly_dat;
 	wire				edge_d;
 	wire				edge_c;
 	wire				edge_m;
-	wire		[1:0]	sigs_sel;
+	wire		[ 1:0]	sigs_sel;
 	wire				cff_out;
 	wire				d;
 	wire				clk;

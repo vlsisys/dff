@@ -38,20 +38,23 @@ module u_tile
 	assign	#(`T_DLY_NAND2)		clk			= ~(i_clk & i_tile_sel);
 	assign	#(`T_DLY_BUF)		sigs_sel	= i_sigs_sel;
 
-	wire				dutout[0:3];
-	u_dut #( .T_SU(T_SU0), .T_HD(T_HD0), .T_CQ(T_CQ0)) dut0(.o_mux(dutout[0]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
-	u_dut #( .T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut1(.o_mux(dutout[1]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
-	u_dut #( .T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut2(.o_mux(dutout[2]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
-	u_dut #( .T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut3(.o_mux(dutout[3]), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
+	wire				dutout0;
+	wire				dutout1;
+	wire				dutout2;
+	wire				dutout3;
+	u_dut #( .T_SU(T_SU0), .T_HD(T_HD0), .T_CQ(T_CQ0)) dut0(.o_mux(dutout0), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
+	u_dut #( .T_SU(T_SU1), .T_HD(T_HD1), .T_CQ(T_CQ1)) dut1(.o_mux(dutout1), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
+	u_dut #( .T_SU(T_SU2), .T_HD(T_HD2), .T_CQ(T_CQ2)) dut2(.o_mux(dutout2), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
+	u_dut #( .T_SU(T_SU3), .T_HD(T_HD3), .T_CQ(T_CQ3)) dut3(.o_mux(dutout3), .i_d (d), .i_clk(clk), .i_sel(sigs_sel));
 
 	reg					dut_muxout;
 	wire				xor_out;
 	always @(*) begin
 		case(i_duts_sel)
-			0:	dut_muxout	= #(`T_DLY_MUX4) dutout[0];
-			1:	dut_muxout	= #(`T_DLY_MUX4) dutout[1];
-			2:	dut_muxout	= #(`T_DLY_MUX4) dutout[2];
-			3:	dut_muxout	= #(`T_DLY_MUX4) dutout[3];
+			0:	dut_muxout	= #(`T_DLY_MUX4) dutout0;
+			1:	dut_muxout	= #(`T_DLY_MUX4) dutout1;
+			2:	dut_muxout	= #(`T_DLY_MUX4) dutout2;
+			3:	dut_muxout	= #(`T_DLY_MUX4) dutout3;
 		endcase
 	end
 	

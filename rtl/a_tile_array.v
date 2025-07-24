@@ -41,9 +41,9 @@ module a_tile_array
 		.T_HD2		(0				),
 		.T_HD3		(0				),
 		.T_CQ0		(140			),
-		.T_CQ1		(240			),
-		.T_CQ2		(340			),
-		.T_CQ3		(440			)
+		.T_CQ1		(140			),
+		.T_CQ2		(140			),
+		.T_CQ3		(140			)
 	)
 	u_tile0(
 		.o_tile		(tile_io[0]		),

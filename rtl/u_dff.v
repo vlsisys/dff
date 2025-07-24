@@ -78,7 +78,7 @@ module	dff
 			end else if (!hd_pass) begin
 				o_q		<=	q_hd_tested;
 			end else begin
-				o_q		<=	i_d;
+				o_q		<=	q_ideal;
 			end
 		end
 	end

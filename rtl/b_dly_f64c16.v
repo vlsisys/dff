@@ -21,7 +21,6 @@ module b_dly_f64c16
 		.i_in	(i_dly[5:0]		)
 	);
 
-
 	c_dly_fine64
 	c_dly_fine64(
 		.o_out	(w_dly_fine		),

@@ -1,0 +1,38 @@
+// ==================================================
+//	[ VLSISYS Lab. ]
+//	* Author		: Woong Choi (woongchoi@sm.ac.kr)
+//	* Filename		: b_dly_f64c32.v
+//	* Description	: 
+// ==================================================
+
+module b_dly_f64c32
+(	
+	output				o_out,
+	input				i_in,
+	input		[10:0]	i_dly
+);
+
+	wire			w_dly_fine;
+	wire	[63:0]	w_sel_fine;
+
+	u_thermometer64
+	u_thermometer64(	
+		.o_out	(w_sel_fine		),
+		.i_in	(i_dly[5:0]		)
+	);
+
+	c_dly_fine64
+	c_dly_fine64(
+		.o_out	(w_dly_fine		),
+		.i_in	(i_in			),
+		.i_sel	(w_sel_fine		)
+	);
+
+	u_dly_coarse32
+	u_dly_coarse32(
+		.o_out	(o_out			),
+		.i_in	(w_dly_fine		),
+		.i_sel	(i_dly[10:6] 	)
+	);
+
+endmodule
