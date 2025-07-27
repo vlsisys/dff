@@ -7,7 +7,7 @@
 // --------------------------------------------------
 //	Define Global Variables
 // --------------------------------------------------
-`define	CLKFREQ		10		// Clock Freq. (Unit: MHz)
+`define	CLKFREQ		5		// Clock Freq. (Unit: MHz)
 `define	SIMCYCLE	`NVEC	// Sim. Cycles
 `define BW_DATA		32		// Bitwidth of ~~
 `define BW_ADDR		5		// Bitwidth of ~~
@@ -105,7 +105,7 @@ module a_top_tb;
 		i_start	= 1;
 		#(1000000/`CLKFREQ);
 		i_start	= 0;
-		#(250*1000000/`CLKFREQ);
+		#(300*1000000/`CLKFREQ);
 		$finish;
 	end
 

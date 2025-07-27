@@ -12,7 +12,7 @@ module u_dut
 	parameter	T_CQ	= 100
 )
 (	
-	output reg			o_mux,
+	output 				o_mux,
 	input				i_d,
 	input				i_clk,
 	input	[1:0]		i_sel
@@ -30,13 +30,8 @@ module u_dut
 	dff #(.T_SU(T_SU), .T_HD(T_HD), .T_CQ(T_CQ)) dut0(.o_q(q0), .i_d(d), .i_clk(clk), .i_rstn(1'b1));
 	dff #(.T_SU(T_SU), .T_HD(T_HD), .T_CQ(T_CQ)) dut1(.o_q(q1), .i_d(d), .i_clk(clk), .i_rstn(1'b1));
 
-	always @(*) begin
-		case(i_sel)
-			0:	o_mux	= #(`T_DLY_MUX4) d;
-			1:	o_mux	= #(`T_DLY_MUX4) clk;
-			2:	o_mux	= #(`T_DLY_MUX4) q0;
-			3:	o_mux	= #(`T_DLY_MUX4) q1;
-		endcase
-	end
+	assign	#(`T_DLY_MUX4)	o_mux =	i_sel == 0 ? d   :
+									i_sel == 1 ? clk :
+									i_sel == 2 ? q0  : q1;
 
 endmodule

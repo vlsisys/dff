@@ -10,8 +10,8 @@
 `define	T_DLY_NAND2			40
 `define	T_DLY_BUF			60
 `define	T_DLY_DEC2			60
-`define	T_DLY_MUX2			50
-`define	T_DLY_MUX4			50
+`define	T_DLY_MUX2			40
+`define	T_DLY_MUX4			51
 `define	T_DLY_IMUX			40
 `define	T_DLY_COARSE		60
 `define	T_DLY_FINE_BASE		200
