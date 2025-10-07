@@ -126,16 +126,14 @@ module a_top_tb;
 // --------------------------------------------------
 //	DEBUG
 // --------------------------------------------------
-	localparam	S_IDLE		= 4'd 0;
-	localparam	S_FIX_TCLK	= 4'd 1;
-	localparam	S_MIN_TQ_D	= 4'd 2;
-	localparam	S_MIN_TQ_Q	= 4'd 3;
-	localparam	S_MIN_TD_F	= 4'd 4;
-	localparam	S_MIN_TD_D	= 4'd 5;
-	localparam	S_MIN_TD_Q	= 4'd 6;
-	localparam	S_SAMPLE_D	= 4'd 7;
-	localparam	S_SAMPLE_Q	= 4'd 8;
-	localparam	S_DONE		= 4'd15;
+	localparam	S_IDLE		= 3'd0;
+	localparam	S_FIX_TCLK	= 3'd1;
+	localparam	S_MIN_TQ_D	= 3'd2;
+	localparam	S_MIN_TQ_Q	= 3'd3;
+	localparam	S_MIN_TD_F	= 3'd4;
+	localparam	S_SAMPLE_D	= 3'd5;
+	localparam	S_SAMPLE_Q	= 3'd6;
+	localparam	S_DONE		= 3'd7;
 
 	reg			[127:0]			ASCII_C_STATE;
 	always @(*) begin
@@ -145,8 +143,6 @@ module a_top_tb;
 			S_MIN_TQ_D	: ASCII_C_STATE = "MIN_TQ_D";
 			S_MIN_TQ_Q	: ASCII_C_STATE = "MIN_TQ_Q";
 			S_MIN_TD_F	: ASCII_C_STATE = "MIN_TD_F";
-			S_MIN_TD_D	: ASCII_C_STATE = "MIN_TD_D";
-			S_MIN_TD_Q  : ASCII_C_STATE = "MIN_TD_Q";
 			S_SAMPLE_D  : ASCII_C_STATE = "SAMPLE_D";
 			S_SAMPLE_Q  : ASCII_C_STATE = "SAMPLE_Q";
 			S_DONE		: ASCII_C_STATE = "DONE    ";

@@ -10,7 +10,8 @@ module a_top
 	output 				o_osc,
 	output 				o_cff,
 	input		[ 1:0]	i_mode,
-	input		[ 4:0]	i_addr,
+	input		[ 4:0]	i_dut_addr,
+	input		[ 3:0]	i_reg_addr,
 	input				i_osc_en,
 	input				i_start,
 	input				i_clk,
@@ -35,6 +36,7 @@ module a_top
 
 	a_fsm
 	u_a_fsm(
+		.o_state		(				),
 		.o_dly_ref		(dly_ref		),
 		.o_dly_dat		(dly_dat		),
 		.o_edge_d		(edge_d			),
@@ -42,7 +44,9 @@ module a_top
 		.o_edge_m		(edge_m			),
 		.o_sigs_sel		(sigs_sel		),
 		.i_mode			(i_mode			),
-		.i_addr			(i_addr			),
+		.i_dut_addr		(i_dut_addr		),
+		.i_reg_addr		(i_reg_addr		),
+		.i_osc_en		(i_osc_en		),
 		.i_start		(i_start		),
 		.i_cff_out		(o_cff			),
 		.i_clk			(i_clk			),
@@ -80,7 +84,7 @@ module a_top
 		.o_tile			(tile_out		),
 		.i_d			(d				),
 		.i_clk			(clk			),
-		.i_addr			(i_addr[4:1]	),
+		.i_addr			(i_dut_addr[4:1]),
 		.i_edge_sel		(edge_m			),
 		.i_sigs_sel		(sigs_sel		)
 	);

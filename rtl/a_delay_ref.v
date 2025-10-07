@@ -17,6 +17,7 @@ module a_delay_ref
 	
 	wire				w_imux_o;
 	wire				w_dcell_o[0:9];
+
 	assign	#(`T_DLY_IMUX)	w_imux_o	= i_osc_en ? ~w_dcell_o[9]:~i_test_clk;
 
 	b_dly_f64c32 i0(.o_out (w_dcell_o[0]), .i_in (w_imux_o    ), .i_dly (i_dly));
