@@ -49,6 +49,7 @@ module a_fsm
 	localparam	S_SAMPLE_D	= 3'd5;
 	localparam	S_SAMPLE_Q	= 3'd6;
 	localparam	S_DONE		= 3'd7;
+	reg			[10:0]	dly_ref;
 
 	reg			[2:0]	c_state ;
 	reg			[2:0]	n_state ;
@@ -230,6 +231,7 @@ module a_fsm
 // Register
 // --------------------------------------------------
 	reg			[10:0]	reg_dly_ref[0:10];
+
 	always @(posedge i_clk or negedge i_rstn) begin
 		if (!i_rstn) begin
 			reg_dly_ref[ 0]	<= 0;

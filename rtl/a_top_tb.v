@@ -44,7 +44,8 @@ module a_top_tb;
 	output 			o_osc;
 	output 			o_cff;
 	reg		[1:0]	i_mode;
-	reg		[4:0]	i_addr;
+	reg		[4:0]	i_dut_addr;
+	reg		[3:0]	i_reg_addr;
 	reg				i_osc_en;
 	reg				i_start;
 	reg				i_clk;
@@ -55,7 +56,8 @@ module a_top_tb;
 		.o_osc				(o_osc				),
 		.o_cff				(o_cff				),
 		.i_mode				(i_mode				),
-		.i_addr				(i_addr				),
+		.i_dut_addr			(i_dut_addr			),
+		.i_reg_addr			(i_reg_addr			),
 		.i_osc_en			(i_osc_en			),
 		.i_start			(i_start			),
 		.i_clk				(i_clk				),
@@ -77,7 +79,8 @@ module a_top_tb;
 		begin
 			taskState	= "Init";
 			i_mode		= 0;
-			i_addr		= 0;
+			i_dut_addr	= 0;
+			i_reg_addr	= 0;
 			i_osc_en	= 0;
 			i_start		= 0;
 			i_clk		= 0;
@@ -116,6 +119,9 @@ module a_top_tb;
 	initial begin
 		if ($value$plusargs("vcd_file=%s", vcd_file)) begin
 			$dumpfile(vcd_file);
+			for (j=0; j<11; j++) begin
+				$dumpvars(0, dut.u_a_fsm.reg_dly_ref[j]);
+			end
 			$dumpvars;
 		end else begin
 			$dumpfile("a_top_tb.vcd");
